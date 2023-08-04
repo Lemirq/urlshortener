@@ -4,12 +4,13 @@ const cors = require('cors');
 const app = express();
 const bodyParser = require('body-parser')
 const dns = require('dns')
-const {readFileSync, writeFileSync} = require('fs')
+const { readFileSync, writeFileSync } = require('fs')
 
 app.use(bodyParser.urlencoded({ extended: false }))
 
 // Basic Configuration
 const port = process.env.PORT || 3000;
+
 
 app.use(cors());
 
@@ -35,19 +36,19 @@ Object.keys(parsedSitelist).forEach((item, i) => {
 app.post('/api/shorturl', (req, res) => {
   const url = req.body.url
 
-  dns.lookup(url, {all: true}, (err, addresses) => {
-    if (err){
+  dns.lookup(url, { all: true }, (err, addresses) => {
+    if (err) {
       console.log(err)
     }
-    if(addresses){
-      parsedSitelist[2] = {hello: "there"}
+    if (addresses) {
+      parsedSitelist[2] = { hello: "there" }
       console.log('length', parsedSitelist.length)
       writeFileSync(path, JSON.stringify(parsedSitelist), 'utf-8')
-      
-      
+
+
     }
-    else{
-      res.json({error: "Invalid URL"})
+    else {
+      res.json({ error: "Invalid URL" })
     }
   })
 })
